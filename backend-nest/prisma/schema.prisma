@@ -28,3 +28,21 @@ model User {
   createdAt DateTime @default(now())
   todos     Todo[]
 }
+
+// Obsługa bazy danych:
+//
+// 1. Po naniesieniu dodatkowych zmian w bazie wykonaj:
+//     prisma format
+//    Dodane zostaną wszystkie potrzebne zależności
+//
+// 2. W celu utworzenia migracji napisz:
+//     npm run db:migrate <nazwa_migracji>
+//    Mogą pojawić się błędy związane z tym,  ze w bazie istnieją wpisy, które nie spełniają
+//    warunków nowych zmian, w takim przypadku należy wyczyścić bazę ze starych rekordów
+//
+// 3. Czyszczenie starych rekordów i nanoszenie wszystkich migracji na bazę:
+//     prisma migrate reset --force
+//    Wyłącz aplikację przed wykonaniem polecenia
+//
+// 4. Zaktualizowanie wszystkich migracji (opcjonalne)
+//     npm run db:update

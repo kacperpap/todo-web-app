@@ -1,35 +1,17 @@
 import {SimpleGrid} from "@mantine/core";
 import {TodoType} from "../../types/TodoType";
 import {TodoListItem} from "./TodoListItem";
+import {useEffect, useState} from "react";
+import {listTodo} from "./api/todo";
 
-const data: TodoType[] = [
-    {
-        id: 1,
-        title: 'Zrobić zakupy',
-        content: 'Coś tam coś tam',
-        done: false
-    },
-    {
-        id: 2,
-        title: 'Kupić książkę',
-        content: 'Tytuł ksiązki: autor:',
-        done: false
-    },
-    {
-        id: 3,
-        title: 'Pranie',
-        content: 'Zrobic pranie',
-        done: true
-    },
-    {
-        id: 4,
-        title: 'Zaliczyć przedmiot',
-        content: 'Zaliczyć inzynierie internetu',
-        done: false
-    }
-]
 
 export const TodoList = () => {
+    const [data, setData] = useState<TodoType[]>([]);
+
+    useEffect(() => {
+        listTodo().then((response) => setData(response))}, [])
+
+
     return (
         <div style={{width: '100%'}}>
             <SimpleGrid cols={{base: 1, sm: 2, lg: 3}}>

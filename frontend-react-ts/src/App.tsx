@@ -5,7 +5,9 @@ import {Routing} from "./features/Routing";
 
 // core styles are required for all packages
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 import {createTheme, MantineProvider} from "@mantine/core";
+import {Notifications} from '@mantine/notifications';
 
 // other css files are required only if
 // you are using components from the corresponding package
@@ -22,6 +24,7 @@ const theme = createTheme({
 function App() {
     return (
         <MantineProvider theme={theme}>
+            <Notifications/>
             <BrowserRouter>
                 <Routing/>
             </BrowserRouter>

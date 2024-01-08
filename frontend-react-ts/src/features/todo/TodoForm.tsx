@@ -1,12 +1,21 @@
 import {Button, Checkbox, Group, Paper, Stack, Textarea, TextInput} from "@mantine/core";
 import {useTodoForm} from "./hooks/useTodoForm";
 import {TodoFormValues} from "../../types/TodoFormValues";
+import {createTodo} from "./api/create-todo";
+import {useNavigate} from "react-router-dom";
 
 export const TodoForm = () => {
+    const navigate = useNavigate()
+
     const form = useTodoForm()
 
-    const handleSubmit = (values: TodoFormValues) => {
-        console.log(values)
+    const handleSubmit = async (values: TodoFormValues) => {
+        try {
+            await createTodo(values);
+            navigate('/todo');
+        } catch (error){
+            alert("Cannot add todo :(");
+        }
     }
 
     return (
