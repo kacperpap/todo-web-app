@@ -18,13 +18,14 @@ import { TodoNotFoundException } from '../../exceptions/todo-not-found-exception
 import { EditTodoDto } from './dto/edit-todo.dto';
 import { TodoFilterDto } from './dto/todo-filter.dto';
 import { TokenGuard } from '../auth/token.guard';
+import { TodoGroupGuard } from '../auth/todo-group.guard';
 
 @Controller('todo')
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
   @Get(':groupTodoId')
-  @UseGuards(TokenGuard)
+  @UseGuards(TokenGuard, TodoGroupGuard)
   listTodo(
     @Query() filter: TodoFilterDto,
     @Param('groupTodoId', ParseIntPipe) todoGroupId: number,
@@ -33,7 +34,7 @@ export class TodoController {
   }
 
   @Get(':groupTodoId/:id')
-  @UseGuards(TokenGuard)
+  @UseGuards(TokenGuard, TodoGroupGuard)
   async getTodo(
     @Param('groupTodoId', ParseIntPipe) todoGroupId: number,
     @Param('id', ParseIntPipe) id: number,
@@ -45,7 +46,7 @@ export class TodoController {
   }
 
   @Post(':groupTodoId/')
-  @UseGuards(TokenGuard)
+  @UseGuards(TokenGuard, TodoGroupGuard)
   addTodo(
     @Body() data: CreateTodoDto,
     @Param('groupTodoId', ParseIntPipe) todoGroupId: number,
@@ -55,7 +56,7 @@ export class TodoController {
 
   @Delete(':groupTodoId/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(TokenGuard)
+  @UseGuards(TokenGuard, TodoGroupGuard)
   async deleteTodo(
     @Param('id', ParseIntPipe) id: number,
     @Param('groupTodoId', ParseIntPipe) todoGroupId: number,
@@ -67,7 +68,7 @@ export class TodoController {
   }
 
   @Put(':groupTodoId/:id')
-  @UseGuards(TokenGuard)
+  @UseGuards(TokenGuard, TodoGroupGuard)
   async editTodo(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: EditTodoDto,

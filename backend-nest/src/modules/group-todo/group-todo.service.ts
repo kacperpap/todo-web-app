@@ -39,4 +39,16 @@ export class GroupTodoService {
       },
     });
   }
+
+  async checkAccess(userId: number, groupId: number): Promise<boolean> {
+    const group = await this.prisma.todoGroup.findUnique({
+      where: {
+        id: groupId,
+        userId: userId,
+      },
+    });
+
+    if (!group) return false;
+    return true;
+  }
 }

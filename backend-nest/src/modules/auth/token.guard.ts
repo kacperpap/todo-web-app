@@ -16,6 +16,7 @@ export class TokenGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = request.cookies['access-token'];
+
     if (!token) throw new UnauthorizedException();
     try {
       const payload = this.tokenService.verifyToken(token);

@@ -16,6 +16,13 @@ import { UserID } from '../auth/user.decorator';
 import { CreateGroupTodoDto } from './dto/create-group-todo.dto';
 import { TodoGroupNotFoundException } from '../../exceptions/todo-group-not-found-exception';
 
+/***
+ There is no urge to use TodoGroupGuard here, cause
+ every request have additional userId, which is used
+ as a parameter to where clause in database query
+ thus we look for todos group only in groups with specified userId
+ ***/
+
 @Controller('group-todo')
 export class GroupTodoController {
   constructor(private groupTodoService: GroupTodoService) {}

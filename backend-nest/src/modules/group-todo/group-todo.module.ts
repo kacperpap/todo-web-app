@@ -7,5 +7,6 @@ import { PrismaModule } from '../prisma/prisma.module';
   providers: [GroupTodoService],
   controllers: [GroupTodoController],
   imports: [PrismaModule],
+  exports: [GroupTodoService],
 })
 export class GroupTodoModule {}
