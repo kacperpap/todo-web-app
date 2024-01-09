@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TokenModule } from './modules/token/token.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { GroupTodoModule } from './modules/group-todo/group-todo.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from './modules/auth/auth.module';
     TokenModule,
     UserModule,
     AuthModule,
+    GroupTodoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

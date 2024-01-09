@@ -8,6 +8,10 @@ export class UserDto implements User {
   @Exclude()
   createdAt: Date;
 
+  @Exclude()
+  terms: boolean;
+
   id: number;
+  name: string;
   email: string;
 }

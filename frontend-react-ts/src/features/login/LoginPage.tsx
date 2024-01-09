@@ -1,7 +1,12 @@
 import {useForm} from "@mantine/form";
 import {login} from "./api/login";
 import {useNavigate} from "react-router-dom";
-import {loginErrorNotifications, registerErrorNotifications} from "./notifications";
+import {
+    loginErrorNotifications,
+    registerEmailErrorNotifications,
+    registerErrorNotifications,
+    registerSuccessNotifications
+} from "./notifications";
 
 import {upperFirst, useToggle} from '@mantine/hooks';
 import {
@@ -21,6 +26,8 @@ import {GoogleButton} from './GoogleButton';
 import {register} from "./api/register";
 import {LoginFormType} from "../../types/LoginFormType";
 import {RegisterFormType} from "../../types/RegisterFormType";
+import {HTTPError} from "ky";
+
 
 
 export function LoginPage(props: PaperProps) {
@@ -49,13 +56,21 @@ export function LoginPage(props: PaperProps) {
                 navigate('/todo');
             } else if (type === 'register' && 'name' in data && 'terms' in data) {
                 await register(data);
+                form.reset();
                 navigate('/login');
+                toggle();
+                registerSuccessNotifications();
             }
         } catch (error) {
+            const kyError = error as HTTPError;
             if(type === 'login')
-                loginErrorNotifications()
-            else if(type === 'register')
-                registerErrorNotifications()
+                loginErrorNotifications();
+            else if(type === 'register') {
+                if(kyError.response.status === 409)
+                    registerEmailErrorNotifications();
+                else
+                    registerErrorNotifications();
+            }
         }
     }
 

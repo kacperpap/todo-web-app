@@ -11,4 +11,7 @@ export class CreateTodoDto {
 
   @IsBoolean()
   done: boolean;
+
+  @IsNotEmpty()
+  todoGroupId: number;
 }
