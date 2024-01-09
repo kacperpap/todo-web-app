@@ -18,57 +18,62 @@ import { TodoNotFoundException } from '../../exceptions/todo-not-found-exception
 import { EditTodoDto } from './dto/edit-todo.dto';
 import { TodoFilterDto } from './dto/todo-filter.dto';
 import { TokenGuard } from '../auth/token.guard';
-import { UserID } from '../auth/user.decorator';
 
 @Controller('todo')
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
-  @Get()
+  @Get(':groupTodoId')
   @UseGuards(TokenGuard)
-  listTodo(@Query() filter: TodoFilterDto) {
-    return this.todoService.listTodo(filter);
+  listTodo(
+    @Query() filter: TodoFilterDto,
+    @Param('groupTodoId', ParseIntPipe) todoGroupId: number,
+  ) {
+    return this.todoService.listTodo(filter, todoGroupId);
   }
 
-  @Get(':id')
+  @Get(':groupTodoId/:id')
   @UseGuards(TokenGuard)
   async getTodo(
+    @Param('groupTodoId', ParseIntPipe) todoGroupId: number,
     @Param('id', ParseIntPipe) id: number,
-    @UserID() userId: number,
   ) {
-    const todo = await this.todoService.getTodoById(id, userId);
+    const todo = await this.todoService.getTodoById(id, todoGroupId);
     if (!todo) throw new TodoNotFoundException();
 
     return todo;
   }
 
-  @Post()
+  @Post(':groupTodoId/')
   @UseGuards(TokenGuard)
-  addTodo(@Body() data: CreateTodoDto, @UserID() userId: number) {
-    return this.todoService.addTodo(data, userId);
+  addTodo(
+    @Body() data: CreateTodoDto,
+    @Param('groupTodoId', ParseIntPipe) todoGroupId: number,
+  ) {
+    return this.todoService.addTodo(data, todoGroupId);
   }
 
-  @Delete(':id')
+  @Delete(':groupTodoId/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(TokenGuard)
   async deleteTodo(
     @Param('id', ParseIntPipe) id: number,
-    @UserID() userId: number,
+    @Param('groupTodoId', ParseIntPipe) todoGroupId: number,
   ) {
-    const todo = await this.todoService.getTodoById(id, userId);
+    const todo = await this.todoService.getTodoById(id, todoGroupId);
     if (!todo) throw new TodoNotFoundException();
 
     await this.todoService.deleteTodo(id);
   }
 
-  @Put(':id')
+  @Put(':groupTodoId/:id')
   @UseGuards(TokenGuard)
   async editTodo(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: EditTodoDto,
-    @UserID() userId: number,
+    @Param('groupTodoId', ParseIntPipe) todoGroupId: number,
   ) {
-    const todo = await this.todoService.getTodoById(id, userId);
+    const todo = await this.todoService.getTodoById(id, todoGroupId);
     if (!todo) throw new TodoNotFoundException();
 
     return this.todoService.editTodo(id, data);

@@ -7,9 +7,10 @@ import { TodoFilterDto } from './dto/todo-filter.dto';
 @Injectable()
 export class TodoService {
   constructor(private readonly prisma: PrismaService) {}
-  async listTodo(filter: TodoFilterDto) {
+  async listTodo(filter: TodoFilterDto, todoGroupId: number) {
     return this.prisma.todo.findMany({
       where: {
+        todoGroupId: todoGroupId,
         done: filter.isDone,
       },
       orderBy: {
@@ -17,14 +18,13 @@ export class TodoService {
       },
     });
   }
-  async addTodo(data: CreateTodoDto, userId: number) {
+  async addTodo(data: CreateTodoDto, groupId: number) {
     return this.prisma.todo.create({
-      // or without manual mapping create({data})
       data: {
         title: data.title,
         content: data.content,
         done: data.done,
-        userId: userId,
+        todoGroupId: groupId,
       },
     });
   }
@@ -46,11 +46,11 @@ export class TodoService {
     });
   }
 
-  getTodoById(id: number, userId: number) {
+  getTodoById(id: number, groupId: number) {
     return this.prisma.todo.findUnique({
       where: {
         id: id,
-        userId: userId,
+        todoGroupId: groupId,
       },
     });
   }

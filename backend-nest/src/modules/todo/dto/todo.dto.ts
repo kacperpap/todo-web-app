@@ -3,5 +3,4 @@ export class TodoDto {
   title: string;
   content: string;
   done: boolean;
-  todoGroupId: number;
 }
