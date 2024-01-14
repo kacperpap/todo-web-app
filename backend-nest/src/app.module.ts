@@ -8,7 +8,6 @@ import { TokenModule } from './modules/token/token.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { GroupTodoModule } from './modules/group-todo/group-todo.module';
-import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -19,7 +18,6 @@ import { CategoryModule } from './modules/category/category.module';
     UserModule,
     AuthModule,
     GroupTodoModule,
-    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

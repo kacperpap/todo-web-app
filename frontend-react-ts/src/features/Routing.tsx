@@ -5,6 +5,8 @@ import {TodoForm} from "./todo/TodoForm";
 import {ErrorPage} from "./error/ErrorPage";
 import {LoginPage} from "./login/LoginPage";
 import {useIsLogged} from "../hooks/useIsLogged";
+import {GroupTodoList} from "./group-todo/GroupTodoList";
+import {GroupTodoForm} from "./group-todo/GroupTodoForm";
 
 const publicRoutes: RouteObject[] = [
     {
@@ -33,12 +35,24 @@ const privateRoutes: RouteObject[] = [
                 element: <TodoList/>
             },
             {
+                path: '/todo/:id',
+                element: <TodoList/>
+            },
+            {
                 path: '/todo/new',
                 element: <TodoForm/>
             },
             {
-                path: '/todo/:id',
-                element: <TodoForm/>
+                path: '/group-todo/new',
+                element: <GroupTodoForm/>
+            },
+            // {
+            //     path: '/todo/:id',
+            //     element: <TodoForm/>
+            // },
+            {
+                path: '/group-todo',
+                element: <GroupTodoList />
             },
             {
                 path: '*',

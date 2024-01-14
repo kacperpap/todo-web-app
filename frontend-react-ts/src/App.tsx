@@ -21,9 +21,10 @@ const theme = createTheme({
     /** Put your mantine theme override here */
 });
 
+// defaultColorScheme="dark"
 function App() {
     return (
-        <MantineProvider theme={theme}>
+        <MantineProvider theme={theme} >
             <Notifications/>
             <BrowserRouter>
                 <Routing/>

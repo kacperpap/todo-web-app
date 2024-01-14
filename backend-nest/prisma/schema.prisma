@@ -32,31 +32,29 @@ model User {
 }
 
 model TodoGroup {
-  id                Int                 @id @default(autoincrement())
-  name              String
-  createdAt         DateTime            @default(now())
-  user              User                @relation(fields: [userId], references: [id])
-  userId            Int
-  todos             Todo[]
-  categories        Category[]
-  TodoGroupCategory TodoGroupCategory[]
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  todos     Todo[]
+  // todoGroupCategory TodoGroupCategory[]
 }
 
-model Category {
-  id                Int                 @id @default(autoincrement())
-  name              String
-  todoGroup         TodoGroup           @relation(fields: [todoGroupId], references: [id])
-  todoGroupId       Int
-  TodoGroupCategory TodoGroupCategory[]
-}
+// model Category {
+//   id                Int                 @id @default(autoincrement())
+//   name              String              @unique
+//   todoGroupCategory TodoGroupCategory[]
+// }
 
-model TodoGroupCategory {
-  id          Int       @id @default(autoincrement())
-  todoGroup   TodoGroup @relation(fields: [todoGroupId], references: [id])
-  todoGroupId Int
-  category    Category  @relation(fields: [categoryId], references: [id])
-  categoryId  Int
-}
+// model TodoGroupCategory {
+//   id          Int       @id @default(autoincrement())
+//   created     DateTime  @default(now())
+//   todoGroup   TodoGroup @relation(fields: [todoGroupId], references: [id])
+//   todoGroupId Int
+//   category    Category  @relation(fields: [categoryId], references: [id])
+//   categoryId  Int
+// }
 
 // Obsługa bazy danych:
 //

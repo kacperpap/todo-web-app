@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateGroupTodoDto } from './dto/create-group-todo.dto';
+import { EditGroupTodoDto } from './dto/edit-group-todo.dto';
 
 @Injectable()
 export class GroupTodoService {
@@ -23,7 +24,7 @@ export class GroupTodoService {
     });
   }
 
-  addGroupTodo(data: CreateGroupTodoDto, userId: number) {
+  async addGroupTodo(data: CreateGroupTodoDto, userId: number) {
     return this.prisma.todoGroup.create({
       data: {
         name: data.name,
@@ -36,6 +37,17 @@ export class GroupTodoService {
     return this.prisma.todoGroup.delete({
       where: {
         id: id,
+      },
+    });
+  }
+
+  editGroupTodo(groupId: number, data: EditGroupTodoDto) {
+    return this.prisma.todoGroup.update({
+      where: {
+        id: groupId,
+      },
+      data: {
+        name: data.name,
       },
     });
   }
