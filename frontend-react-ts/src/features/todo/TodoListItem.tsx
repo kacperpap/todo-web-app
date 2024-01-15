@@ -1,23 +1,37 @@
 import {FC, memo, useState} from "react";
 import {TodoType} from "../../types/TodoType"
 import {
-    Badge,
-    Card,
-    Image,
-    Group,
-    Text,
-    AccordionControl,
     Accordion,
-    ColorSwatch,
-    CheckIcon,
+    AccordionControl,
+    Badge,
+    Button,
+    darken,
+    defaultVariantColorsResolver,
+    Group,
+    MantineProvider,
+    Menu,
+    parseThemeColor,
     rem,
-    ActionIcon,
-    MantineProvider, rgba, darken, VariantColorsResolver, defaultVariantColorsResolver, parseThemeColor, Menu, Button
+    rgba,
+    Text, TextInput,
+    VariantColorsResolver
 } from "@mantine/core";
-import {IconCheck, IconTrash} from "@tabler/icons-react";
+import {IconCheck, IconEdit, IconSend, IconTrash, IconX} from "@tabler/icons-react";
+import {deleteTodo} from "./api/delete-todo";
+import {listTodo} from "./api/todo";
+import {
+    deletionFailedNotification,
+    deletionSuccessNotification,
+    updateFailedNotification,
+    updateSuccessNotification
+} from "./notifications";
+import {updateTodo} from "./api/update-todo";
+import {TodoUpdateType} from "../../types/TodoUpdateType";
 
 interface TodoListItemProps {
-    item: TodoType
+    item: TodoType,
+    groupId: string,
+    setData: React.Dispatch<React.SetStateAction<TodoType[]>>
 }
 
 const variantColorResolver: VariantColorsResolver = (input) => {
@@ -56,25 +70,86 @@ const variantColorResolver: VariantColorsResolver = (input) => {
     return defaultResolvedColors;
 };
 
-export const TodoListItem: FC<TodoListItemProps> = memo(({item}) => {
+export const TodoListItem: FC<TodoListItemProps> = memo(({item, groupId, setData}) => {
     const [checked, setChecked] = useState(item.done);
-
-    const handleCheck = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        event.stopPropagation();
-        setChecked((c) => !c);
+    const [editMode, setEditMode] = useState(false);
+    const [title, setTitle] = useState(item.title);
+    const [content, setContent] = useState(item.content);
+    const handleEdit = () => {
+        setEditMode(true);
     };
 
-    const handleDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleSave = async () => {
+        const updatedTodo: TodoUpdateType = {
+            content: content,
+            title: title,
+            done: item.done
+        }
+
+        try {
+            await updateTodo(groupId, item.id.toString(), updatedTodo);
+            const updatedData = await listTodo(groupId);
+            setData(updatedData);
+            updateSuccessNotification();
+        } catch (error)
+        {
+            updateFailedNotification();
+        }
+
+        setEditMode(false);
+    };
+
+    const handleCancel = () => {
+        setTitle(item.title);
+        setContent(item.content);
+        setEditMode(false);
+    };
+
+    const handleCheck = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation();
-        // Tutaj dodaj logikę do usuwania zadania
+        setChecked((c) => !c);
+        const updatedTodo: TodoUpdateType = {
+            content: item.content,
+            title: item.title,
+            done: !checked
+        }
+
+        try {
+            await updateTodo(groupId, item.id.toString(), updatedTodo);
+            const updatedData = await listTodo(groupId);
+            setData(updatedData);
+            updateSuccessNotification();
+        } catch (error)
+        {
+            updateFailedNotification();
+        }
+    };
+
+    const handleDelete = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.stopPropagation();
+        try {
+            await deleteTodo(groupId, item.id.toString());
+            const updatedData = await listTodo(groupId);
+            setData(updatedData);
+            deletionSuccessNotification();
+        } catch (error) {
+            deletionFailedNotification();
+        }
     };
 
     return (
         <MantineProvider theme={{ variantColorResolver }}>
-            <Accordion.Item value={item.id.toString()} style={{ marginBottom: '20px' }}>
+            <Accordion.Item value={item.id.toString()} style={{ marginBottom: '20px' }} >
                 <AccordionControl>
                     <Group justify="space-between">
-                        <Text>{item.title}</Text>
+                        {editMode ? (
+                            <TextInput
+                                value={title}
+                                onChange={(event) => setTitle(event.currentTarget.value)}
+                            />
+                        ) : (
+                            <Text>{item.title}</Text>
+                        )}
                         <Group justify="space-between">
                             <Badge color={checked ? "lime.4" : "red"} variant="filled" style={{ marginRight: '4px' }}>
                                 {checked ? "Done" : "Not Done"}
@@ -91,6 +166,12 @@ export const TodoListItem: FC<TodoListItemProps> = memo(({item}) => {
                                         {checked ? "Mark as not done" : "Mark as done"}
                                     </Menu.Item>
                                     <Menu.Item
+                                        leftSection={<IconEdit style={{ width: rem(14), height: rem(14) }} />}
+                                        onClick={handleEdit}
+                                    >
+                                        Edit
+                                    </Menu.Item>
+                                    <Menu.Item
                                         color="red"
                                         leftSection={<IconTrash style={{ width: rem(14), height: rem(14) }} />}
                                         onClick={handleDelete}
@@ -102,8 +183,27 @@ export const TodoListItem: FC<TodoListItemProps> = memo(({item}) => {
                         </Group>
                     </Group>
                 </AccordionControl>
-                <Accordion.Panel>{item.content}</Accordion.Panel>
+                <Accordion.Panel>
+                    {editMode ? (
+                        <>
+                            <TextInput
+                                value={content}
+                                onChange={(event) => setContent(event.currentTarget.value)}
+                                style={{marginBottom: '5%'}}
+                            />
+                            <div style={{display: 'flex', justifyContent: 'flex-end', gap: '10px'}}>
+                                <Button color="green" variant="light" rightSection={<IconCheck size={12}/>}
+                                        onClick={handleSave}>Save</Button>
+                                <Button color="red" variant="light" rightSection={<IconX size={12}/>}
+                                        onClick={handleCancel}>Cancel</Button>
+                            </div>
+
+                        </>
+                    ) : (
+                        item.content
+                    )}
+                </Accordion.Panel>
             </Accordion.Item>
         </MantineProvider>
-    )
+    );
 });

@@ -11,10 +11,11 @@ export const GroupTodoList = () => {
     const [currentPage,setCurrentPage] = useState(1);
     const itemsPerPage = 6;
 
+
     const navigate = useNavigate();
 
     useEffect(() => {
-        listGroupTodo().then((response) => setData(response))}, [])
+        listGroupTodo().then((response) => setData(response))}, [data])
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
@@ -28,12 +29,26 @@ export const GroupTodoList = () => {
 
     return (
         <div style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '85vh', overflow: 'hidden'}}>
-            <SimpleGrid cols={{base: 1, sm: 2, lg: 3}}>
-                {paginatedData.map((item) => <GroupTodoListItem key={item.id} item={item} onClick={() => handleItemClick(item.id)} />)}
-            </SimpleGrid>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '100px' }}>
-                <Pagination total={Math.ceil(data.length / itemsPerPage)} radius="xl" withEdges onChange={handlePageChange} />
-            </div>
+            {data.length === 0 ? (
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    color: 'gray',
+                    fontSize: 'large'
+                }}>
+                    Brak zadań do wyświetlenia
+                </div>
+            ) : (
+                <>
+                <SimpleGrid cols={{base: 1, sm: 2, lg: 3}}>
+                    {paginatedData.map((item) => <GroupTodoListItem key={item.id} item={item} onClick={() => handleItemClick(item.id)} groupId={item.id} setData={setData} />)}
+                </SimpleGrid>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1%' }}>
+                    <Pagination total={Math.ceil(data.length / itemsPerPage)} radius="xl" withEdges onChange={handlePageChange} />
+                </div>
+                </> )
+            }
         </div>
     )
 }

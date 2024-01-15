@@ -1,10 +1,17 @@
 import {FC, memo} from "react";
-import {Badge, Card, Group, Image, Text} from "@mantine/core";
+import {Button, Card, Group, Image, Menu, rem, Text} from "@mantine/core";
 import {GroupTodoType} from "../../types/GroupTodoType";
+import {IconCompass, IconTrash} from "@tabler/icons-react";
+import {deletionFailedNotification, deletionSuccessNotification} from "./notifications";
+import {deleteGroupTodo} from "./api/delete-group-todo";
+import {listGroupTodo} from "./api/group-todo";
+import {useNavigate} from "react-router-dom";
 
 interface GroupTodoListItemProps {
     item: GroupTodoType,
-    onClick: () => void;
+    onClick: () => void,
+    groupId: number,
+    setData: React.Dispatch<React.SetStateAction<GroupTodoType[]>>;
 }
 
 const imagesSrc = [
@@ -20,9 +27,26 @@ const imagesSrc = [
     "https://images.unsplash.com/photo-1704642783129-d50efbdfc037?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI0fDZzTVZqVExTa2VRfHxlbnwwfHx8fHw%3D",
 ];
 
-export const GroupTodoListItem: FC<GroupTodoListItemProps> = memo(({item, onClick}) => {
-
+export const GroupTodoListItem: FC<GroupTodoListItemProps> = memo(({item, onClick, groupId, setData}) => {
+    const navigate = useNavigate();
     const imageSrc = imagesSrc[item.id % imagesSrc.length];
+
+    const handleNavigate = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.stopPropagation();
+        navigate(`/todo/${groupId}`);
+    }
+
+    const handleDelete = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.stopPropagation();
+        try {
+            await deleteGroupTodo(groupId.toString());
+            const updatedData = await listGroupTodo();
+            setData(updatedData);
+            deletionSuccessNotification();
+        } catch (error) {
+            deletionFailedNotification();
+        }
+    };
 
     return (
         <Card shadow="sm" padding="lg" radius="md" withBorder onClick={onClick} style={{ transition: '0.3s', cursor: 'pointer' }}
@@ -37,7 +61,26 @@ export const GroupTodoListItem: FC<GroupTodoListItemProps> = memo(({item, onClic
 
             <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={500}> {item.name}</Text>
-                <Badge color="pink" variant="light"/>
+                <Menu shadow="md" width={400}>
+                    <Menu.Target>
+                        <Button onClick={(event) => event.stopPropagation()} style={{ color: "var(--mantine-color-gray-6)", backgroundColor: 'transparent', fontSize: '20px' }}>...</Button>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                        <Menu.Item
+                            leftSection={<IconCompass style={{ width: rem(14), height: rem(14) }} />}
+                            onClick={handleNavigate}
+                        >
+                            Navigate to tasks
+                        </Menu.Item>
+                        <Menu.Item
+                            color="red"
+                            leftSection={<IconTrash style={{ width: rem(14), height: rem(14) }} />}
+                            onClick={handleDelete}
+                        >
+                            Delete group
+                        </Menu.Item>
+                    </Menu.Dropdown>
+                </Menu>
             </Group>
         </Card>
     )
