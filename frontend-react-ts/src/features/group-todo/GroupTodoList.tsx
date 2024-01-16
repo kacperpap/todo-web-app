@@ -15,7 +15,7 @@ export const GroupTodoList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        listGroupTodo().then((response) => setData(response))}, [data])
+        listGroupTodo().then((response) => setData(response))}, [])
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
@@ -28,7 +28,7 @@ export const GroupTodoList = () => {
     }
 
     return (
-        <div style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '85vh', overflow: 'hidden'}}>
+        <div style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '85vh'}}>
             {data.length === 0 ? (
                 <div style={{
                     display: 'flex',
@@ -37,14 +37,14 @@ export const GroupTodoList = () => {
                     color: 'gray',
                     fontSize: 'large'
                 }}>
-                    Brak zadań do wyświetlenia
+                    Brak list zadań do wyświetlenia
                 </div>
             ) : (
                 <>
                 <SimpleGrid cols={{base: 1, sm: 2, lg: 3}}>
                     {paginatedData.map((item) => <GroupTodoListItem key={item.id} item={item} onClick={() => handleItemClick(item.id)} groupId={item.id} setData={setData} />)}
                 </SimpleGrid>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1%' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1%', marginTop: '1%' }}>
                     <Pagination total={Math.ceil(data.length / itemsPerPage)} radius="xl" withEdges onChange={handlePageChange} />
                 </div>
                 </> )

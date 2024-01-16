@@ -8,6 +8,14 @@ export const loginErrorNotifications = () => {
     })
 }
 
+export const logoutErrorNotifications = () => {
+    notifications.show({
+        color: 'red',
+        title: 'Logout failed',
+        message: 'Holly molly, you somehow can\'t escape 🤥',
+    })
+}
+
 export const registerErrorNotifications = () => {
     notifications.show({
         color: 'red',

@@ -78,7 +78,7 @@ export function LoginPage(props: PaperProps) {
     return (
         <Paper radius="md" p="xl" withBorder {...props} style={{maxWidth: '420px', margin: '0 auto', marginTop: '100px' }}>
             <Text size="lg" fw={500}>
-                Welcome to Mantine, {type} with
+                Welcome to Lorro todo, {type} with
             </Text>
 
             <Group grow mb="md" mt="md">
@@ -101,7 +101,7 @@ export function LoginPage(props: PaperProps) {
                     <TextInput
                         required
                         label="Email"
-                        placeholder="hello@mantine.dev"
+                        placeholder="hello@lorro.dev"
                         {...form.getInputProps("email")}
                         radius="md"
                     />

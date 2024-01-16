@@ -18,9 +18,12 @@ export const Layout = () => {
             padding="md"
         >
             <AppShell.Header>
-                <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm"/>
-                <Header/>
+                <div style={{display: 'flex', alignItems: 'center', width: '100%'}}>
+                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm"/>
+                    {<Header/>}
+                </div>
             </AppShell.Header>
+
 
             <AppShell.Navbar p="md">
                 <AppNavbar/>
