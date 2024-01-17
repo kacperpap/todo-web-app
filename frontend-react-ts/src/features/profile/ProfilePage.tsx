@@ -92,7 +92,7 @@ export const ProfilePage = () => {
                 }}
             />
             <Avatar
-                src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png"
+                // src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png"
                 size={80}
                 radius={80}
                 mx="auto"
