@@ -1,8 +1,8 @@
 import {GroupTodoFormValues} from "../../types/GroupTodoFormValues";
 import {createGroupTodo} from "./api/create-group-todo";
 import {useGroupTodoForm} from "./hooks/useGroupTodoForm";
-import {Button, Card, Fieldset, Group, TextInput, Image} from "@mantine/core";
-import {IconArrowRight, IconDownload, IconPhoto, IconSend} from "@tabler/icons-react";
+import {Button, Card, Fieldset, Group, Image, TextInput} from "@mantine/core";
+import {IconArrowRight, IconPhoto, IconSend} from "@tabler/icons-react";
 import {useNavigate} from "react-router-dom";
 import {creationFailedNotification, creationSuccessNotification} from "./notifications";
 

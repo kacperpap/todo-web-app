@@ -13,10 +13,11 @@ import {
     parseThemeColor,
     rem,
     rgba,
-    Text, TextInput,
+    Text,
+    TextInput,
     VariantColorsResolver
 } from "@mantine/core";
-import {IconCheck, IconEdit, IconSend, IconTrash, IconX} from "@tabler/icons-react";
+import {IconCheck, IconEdit, IconTrash, IconX} from "@tabler/icons-react";
 import {deleteTodo} from "./api/delete-todo";
 import {listTodo} from "./api/todo";
 import {
@@ -83,7 +84,8 @@ export const TodoListItem: FC<TodoListItemProps> = memo(({item, groupId, setData
         const updatedTodo: TodoUpdateType = {
             content: content,
             title: title,
-            done: item.done
+            done: item.done,
+            // categories: item.categories
         }
 
         try {
@@ -111,7 +113,8 @@ export const TodoListItem: FC<TodoListItemProps> = memo(({item, groupId, setData
         const updatedTodo: TodoUpdateType = {
             content: item.content,
             title: item.title,
-            done: !checked
+            done: !checked,
+            // categories: item.categories,
         }
 
         try {

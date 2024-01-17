@@ -44,13 +44,13 @@ export class TodoService {
   }
 
   async editTodo(id: number, data: EditTodoDto) {
-    const categories = await this.prisma.category.findMany({
-      where: {
-        name: {
-          in: data.categories,
-        },
-      },
-    });
+    // const categories = await this.prisma.category.findMany({
+    //   where: {
+    //     name: {
+    //       in: data.categories,
+    //     },
+    //   },
+    // });
 
     return this.prisma.todo.update({
       where: {
@@ -60,9 +60,9 @@ export class TodoService {
         title: data.title,
         content: data.content,
         done: data.done,
-        categories: {
-          set: categories.map((category) => ({ id: category.id })),
-        },
+        // categories: {
+        //   set: categories.map((category) => ({ id: category.id })),
+        // },
       },
     });
   }

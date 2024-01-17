@@ -109,7 +109,7 @@ export const ProfilePage = () => {
                 {items}
             </Group>
             <Button onClick={handleNavigate} fullWidth radius="md" mt="xl" size="md" variant="default">
-                Sprawdź sowje listy zadań do wykonania
+                Sprawdź swoje listy zadań do wykonania
             </Button>
         </Card>
     );
