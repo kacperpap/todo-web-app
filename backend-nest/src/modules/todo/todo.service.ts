@@ -16,25 +16,54 @@ export class TodoService {
       orderBy: {
         [filter.sortBy]: filter.sortOrder,
       },
+      include: {
+        categories: true,
+      },
     });
   }
   async addTodo(data: CreateTodoDto, groupId: number) {
+    const categories = await this.prisma.category.findMany({
+      where: {
+        name: {
+          in: data.categories,
+        },
+      },
+    });
+
     return this.prisma.todo.create({
       data: {
         title: data.title,
         content: data.content,
         done: data.done,
+        categories: {
+          connect: categories.map((category) => ({ id: category.id })),
+        },
         todoGroupId: groupId,
       },
     });
   }
 
-  editTodo(id: number, data: EditTodoDto) {
+  async editTodo(id: number, data: EditTodoDto) {
+    const categories = await this.prisma.category.findMany({
+      where: {
+        name: {
+          in: data.categories,
+        },
+      },
+    });
+
     return this.prisma.todo.update({
       where: {
         id: id,
       },
-      data: data,
+      data: {
+        title: data.title,
+        content: data.content,
+        done: data.done,
+        categories: {
+          set: categories.map((category) => ({ id: category.id })),
+        },
+      },
     });
   }
 

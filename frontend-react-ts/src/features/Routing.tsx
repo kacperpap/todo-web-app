@@ -7,11 +7,21 @@ import {LoginPage} from "./login/LoginPage";
 import {useIsLogged} from "../hooks/useIsLogged";
 import {GroupTodoList} from "./group-todo/GroupTodoList";
 import {GroupTodoForm} from "./group-todo/GroupTodoForm";
+import {ProfilePage} from "./profile/ProfilePage";
+import {GreetingPage} from "./greeting/GreetingPage";
 
 const publicRoutes: RouteObject[] = [
     {
         path: '/',
         children: [
+            {
+                path: '/',
+                element: <Navigate to="/login" replace/>
+            },
+            {
+                path: '/greeting',
+                element: <GreetingPage/>
+            },
             {
                 path: '/login',
                 element: <LoginPage/>
@@ -46,13 +56,13 @@ const privateRoutes: RouteObject[] = [
                 path: '/group-todo/new',
                 element: <GroupTodoForm/>
             },
-            // {
-            //     path: '/todo/:id',
-            //     element: <TodoForm/>
-            // },
             {
                 path: '/group-todo',
                 element: <GroupTodoList />
+            },
+            {
+                path: '/profile',
+                element: <ProfilePage />
             },
             {
                 path: '*',

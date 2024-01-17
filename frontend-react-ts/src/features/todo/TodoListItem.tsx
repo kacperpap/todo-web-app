@@ -137,6 +137,14 @@ export const TodoListItem: FC<TodoListItemProps> = memo(({item, groupId, setData
         }
     };
 
+    const colors = ['#e76d6d', '#498f49', '#4141ce', '#bebe30', '#00FFFF', '#FF00FF'];
+
+    function getBadgeColor(categoryId: number) {
+        const index = categoryId % colors.length;
+        return colors[index];
+    }
+
+
     return (
         <MantineProvider theme={{ variantColorResolver }}>
             <Accordion.Item value={item.id.toString()} style={{ marginBottom: '20px' }} >
@@ -151,6 +159,12 @@ export const TodoListItem: FC<TodoListItemProps> = memo(({item, groupId, setData
                             <Text>{item.title}</Text>
                         )}
                         <Group justify="space-between">
+                            {item.categories && item.categories.map((category) => (
+                                <Badge color={getBadgeColor(category.id)} variant="filled" style={{ marginRight: '4px' }}>
+                                    {category.name}
+                                </Badge>
+                            ))}
+
                             <Badge color={checked ? "lime.4" : "red"} variant="filled" style={{ marginRight: '4px' }}>
                                 {checked ? "Done" : "Not Done"}
                             </Badge>

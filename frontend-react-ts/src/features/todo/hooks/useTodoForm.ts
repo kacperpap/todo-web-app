@@ -6,7 +6,8 @@ export const useTodoForm = () => {
         initialValues: {
             content: '',
             title: '',
-            done: false
+            done: false,
+            categories: [],
         },
 
         validate: {
@@ -16,8 +17,8 @@ export const useTodoForm = () => {
                 }
             },
             content: value => {
-                if (value.length < 10) {
-                    return "User input must be at least 10 characters long"
+                if (value.length < 5) {
+                    return "User input must be at least 5 characters long"
                 }
             }
         },

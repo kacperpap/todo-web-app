@@ -7,6 +7,7 @@
     "@mantine/form": "^7.2.2",
     "@mantine/hooks": "^7.2.2",
     "@mantine/notifications": "^7.4.0",
+    "@mantinex/dev-icons": "^1.0.2",
     "@mantinex/mantine-logo": "^1.0.1",
     "@tabler/icons-react": "^2.42.0",
     "@testing-library/jest-dom": "^5.17.0",

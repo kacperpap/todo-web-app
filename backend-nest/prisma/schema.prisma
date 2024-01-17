@@ -19,6 +19,8 @@ model Todo {
 
   todoGroup   TodoGroup @relation(fields: [todoGroupId], references: [id])
   todoGroupId Int
+
+  categories Category[]
 }
 
 model User {
@@ -38,14 +40,22 @@ model TodoGroup {
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
   todos     Todo[]
-  // todoGroupCategory TodoGroupCategory[]
 }
 
-// model Category {
-//   id                Int                 @id @default(autoincrement())
-//   name              String              @unique
-//   todoGroupCategory TodoGroupCategory[]
-// }
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  todos Todo[]
+}
+
+//*****************************************************************************************
+//W schemacie realcji wiele do wielu w postaci explicite (jawnej), w tabeli pośredniczącej
+//przechowujemy dodatkowe informacje oprócz id, oraz 2  id powiązanych elementów
+
+//W schemacie relacji wiele do wielu w postaci implicit (niejawnej), nie musimy tworzyć
+//tabeli pośredniczącej, zostanie ona utworzona za nas przez prisma, natomiast w takiej
+//postaci nie możemy przechowywać żadnych dodatkowych elementów dla takiej relacji
+//*****************************************************************************************
 
 // model TodoGroupCategory {
 //   id          Int       @id @default(autoincrement())

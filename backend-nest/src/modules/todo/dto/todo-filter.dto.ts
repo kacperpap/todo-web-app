@@ -1,4 +1,4 @@
-import { IsEnum, IsOptional } from 'class-validator';
+import { IsArray, IsEnum, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class TodoFilterDto {
@@ -15,4 +15,8 @@ export class TodoFilterDto {
     ['yes', 'true', '1'].includes(value.toLowerCase().trim()),
   )
   isDone?: boolean;
+
+  @IsOptional()
+  @IsArray()
+  categories?: string[];
 }

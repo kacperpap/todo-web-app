@@ -1,4 +1,10 @@
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateTodoDto {
   @IsString()
@@ -11,4 +17,8 @@ export class CreateTodoDto {
 
   @IsBoolean()
   done: boolean;
+
+  @IsOptional()
+  @IsArray()
+  categories: string[];
 }

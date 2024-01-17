@@ -1,7 +1,7 @@
 import React from 'react';
 import {ActionIcon, Menu, MenuItem, NavLink, rem} from '@mantine/core';
 import {useNavigate} from "react-router-dom";
-import {IconCompass, IconHome, IconLogout, IconSettings, IconUserCircle} from "@tabler/icons-react";
+import {IconHome, IconLogout, IconSettings, IconUserCircle} from "@tabler/icons-react";
 import {useMediaQuery} from "@mantine/hooks";
 import {logout} from "../features/login/api/logout";
 import {logoutErrorNotifications} from "../features/login/notifications";

@@ -8,7 +8,7 @@ import {
     Group,
     Image,
     Input,
-    InputBase,
+    InputBase, MultiSelect,
     Textarea,
     TextInput,
     useCombobox
@@ -21,13 +21,25 @@ import {useEffect, useState} from "react";
 import {listGroupTodo} from "../group-todo/api/group-todo";
 import {GroupTodoType} from "../../types/GroupTodoType";
 import {creationFailedNotification, creationSuccessNotification} from "./notifications";
+import {CategoryType} from "../../types/CategoryType";
+import {listCategories} from "./api/category";
 
 export const TodoForm = () => {
     const form = useTodoForm();
 
     const [groups, setGroups] = useState<GroupTodoType[]>([]);
+
+    useEffect(() => {
+        listGroupTodo().then(setGroups);
+    }, []);
+
+    const [categories, setCategories] = useState<CategoryType[]>([]);
+
+    useEffect(() => {
+        listCategories().then(setCategories);
+    }, []);
+
     const [value, setValue] = useState<string | null>(null);
-    const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
         onDropdownOpen: (eventSource) => {
@@ -39,25 +51,6 @@ export const TodoForm = () => {
         },
     });
 
-    useEffect(() => {
-        listGroupTodo().then(setGroups);
-    }, []);
-
-    const handleSubmit = async (values: TodoFormValues) => {
-        try {
-            if(value) {
-                await createTodo(values, value);
-                form.reset();
-                setValue(null);
-                creationSuccessNotification();
-            }
-            else
-                creationFailedNotification();
-        } catch (error){
-            creationFailedNotification();
-        }
-    }
-
     const options = groups.map((item) => (
         <Combobox.Option value={item.id.toString()} key={item.name} active={item.name === value}>
             <Group gap="xs">
@@ -66,6 +59,41 @@ export const TodoForm = () => {
             </Group>
         </Combobox.Option>
     ));
+
+
+
+    const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
+
+    const useMultiSelectInput = (form: any, name: string) => {
+
+        useEffect(() => {
+            form.setFieldValue(name, selectedLabels);
+        }, [selectedLabels]);
+
+        return {
+            value: selectedLabels,
+            onChange: setSelectedLabels,
+        };
+    };
+
+    const categoriesInput = useMultiSelectInput(form, 'categories');
+
+
+    const handleSubmit = async (values: TodoFormValues) => {
+        try {
+            if(value) {
+                await createTodo(values, value);
+                form.reset();
+                setValue(null);
+                setSelectedLabels([]);
+                creationSuccessNotification();
+            }
+            else
+                creationFailedNotification();
+        } catch (error){
+            creationFailedNotification();
+        }
+    }
 
     return (
         <div style={{width: '70%', minWidth: '300px', margin: '0 auto'}}>
@@ -88,7 +116,7 @@ export const TodoForm = () => {
                                 combobox.closeDropdown();
                             }}
                         >
-                            <Combobox.Target targetType="button">
+                        <Combobox.Target targetType="button">
                                 <InputBase
                                     component="button"
                                     type="button"
@@ -97,7 +125,7 @@ export const TodoForm = () => {
                                     rightSectionPointerEvents="none"
                                     onClick={() => combobox.toggleDropdown()}
                                 >
-                                    {value || <Input.Placeholder>Pick value</Input.Placeholder>}
+                                    {value || <Input.Placeholder>Wybierz listę</Input.Placeholder>}
                                 </InputBase>
                             </Combobox.Target>
 
@@ -116,6 +144,12 @@ export const TodoForm = () => {
                             withAsterisk
                             placeholder="Opis todo"
                             {...form.getInputProps('content')}
+                        />
+                        <MultiSelect
+                            data={categories.map(category => category.name)}
+                            {...categoriesInput}
+                            label="Wybierz kategorie"
+                            placeholder="Wybierz kategorie"
                         />
                         <Checkbox
                             defaultChecked

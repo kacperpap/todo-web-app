@@ -8,6 +8,8 @@ import { TokenModule } from './modules/token/token.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { GroupTodoModule } from './modules/group-todo/group-todo.module';
+import { CategoryService } from './modules/category/category.service';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -18,8 +20,9 @@ import { GroupTodoModule } from './modules/group-todo/group-todo.module';
     UserModule,
     AuthModule,
     GroupTodoModule,
+    CategoryModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CategoryService],
 })
 export class AppModule {}

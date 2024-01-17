@@ -4,7 +4,7 @@ export const deletionSuccessNotification = () => {
     notifications.show({
         color: 'yellow',
         title: 'Deleted successfully',
-        message: 'I hope that task won\'t be needed more ⚰️, cause I deleted it as you wished 🗑'
+        message: 'I hope this task won\'t be needed more ⚰️, cause I deleted it as you wished 🗑'
     })
 }
 

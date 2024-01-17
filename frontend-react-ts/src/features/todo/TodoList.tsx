@@ -54,7 +54,7 @@ export const TodoList = () => {
     }
 
     return (
-        <Accordion variant="separated" radius="md" chevronPosition="left" maw={800} mx="auto" >
+        <Accordion variant="separated" radius="md" chevronPosition="left" maw={1000} mx="auto" >
             {data.map((item) => <TodoListItem key={item.id} item={item} groupId={id} setData={setData} />)}
         </Accordion>
     )
