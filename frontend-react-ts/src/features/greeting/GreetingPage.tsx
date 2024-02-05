@@ -7,6 +7,7 @@ export function GreetingPage() {
             position: 'relative',
             boxSizing: 'border-box',
             backgroundColor: 'light-dark(var(--mantine-color-white), var(--mantine-color-dark-8))',
+            marginTop: '100px',
         }}>
             <Container size={700} style={{
                 position: 'relative',
@@ -25,18 +26,22 @@ export function GreetingPage() {
                     margin: 0,
                     padding: 0,
                     color: 'light-dark(var(--mantine-color-black), var(--mantine-color-white))',
-                    // '@media (max-width: $mantine-breakpoint-sm)'
-                    //     : {
-                    //     fontSize: 'rem(42px)',
-                    //     lineHeight: 1.2,
-                    // },
+                    display: 'flex',
+                    justifyContent: 'center'
                 }}>
-                    A{' '}
-                    <Text component="span" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }} inherit>
+                    A
+                    <Text
+                        component="span"
+                        variant="gradient"
+                        gradient={{from: 'blue', to: 'cyan'}}
+                        inherit
+                        style={{marginRight: '0.5rem', marginLeft: '0.5rem'}}
+                    >
                         fully featured
-                    </Text>{' '}
-                    React components and hooks library
+                    </Text>
+                    todo web app
                 </h1>
+
 
                 <Text style={{
                     marginTop: 'var(--mantine-spacing-xl)',
@@ -46,12 +51,16 @@ export function GreetingPage() {
                         fontSize: 'rem(18px)',
                     },
                 }}>
-                    Build fully functional accessible web applications with ease – Mantine includes more than
-                    100 customizable components and hooks to cover you in any situation
+                    Do you have trouble remembering things you need to do? Or maybe you want to organize your to-do
+                    list?
+                    Any reason is good to use a todo web app.
+                    Add task groups and individual tasks, and enjoy an organized life.
                 </Text>
 
                 <Group style={{
                     marginTop: 'calc(var(--mantine-spacing-xl) * 2)',
+                    display: 'flex',
+                    justifyContent: 'center',
                     '@media (max-width: $mantine-breakpoint-sm)': {
                         marginTop: 'var(--mantine-spacing-xl)',
                     },
@@ -77,7 +86,7 @@ export function GreetingPage() {
 
                     <Button
                         component="a"
-                        href="https://github.com/mantinedev/mantine"
+                        href="https://github.com/kacperpap/todo-web-app"
                         size="xl"
                         variant="default"
                         style={{
