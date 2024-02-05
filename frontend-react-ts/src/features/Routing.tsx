@@ -16,7 +16,7 @@ const publicRoutes: RouteObject[] = [
         children: [
             {
                 path: '/',
-                element: <Navigate to="/login" replace/>
+                element: <Navigate to="/greeting" replace/>
             },
             {
                 path: '/greeting',
@@ -28,7 +28,7 @@ const publicRoutes: RouteObject[] = [
             },
             {
                 path: "*",
-                element: <Navigate to="/login" replace/>
+                element: <Navigate to="/greeting" replace/>
             }
         ]
     }

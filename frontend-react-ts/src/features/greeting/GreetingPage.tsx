@@ -1,7 +1,15 @@
 import { Container, Text, Button, Group } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';
+import {useNavigate} from "react-router-dom";
 
 export function GreetingPage() {
+
+    const navigate = useNavigate();
+
+    const goToLoginPage = () => {
+        navigate('/login');
+    }
+
     return (
         <div style={{
             position: 'relative',
@@ -80,6 +88,7 @@ export function GreetingPage() {
                         }}
                         variant="gradient"
                         gradient={{ from: 'blue', to: 'cyan' }}
+                        onClick={goToLoginPage}
                     >
                         Get started
                     </Button>
