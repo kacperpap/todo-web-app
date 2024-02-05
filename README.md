@@ -15,8 +15,8 @@ The application allows user login and registration using `JWT` tokens for author
 
 - <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="typescript" width="40" height="40" /> [TypeScript](https://www.typescriptlang.org/)
 - <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="react" width="40" height="40"/> [React](https://react.dev/)
-- <img src="https://mantine.dev/favicon.ico" alt="mantine" width="40" height="40"/> [Mantine](https://mantine.dev/)
-- <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nestjs/nestjs-plain.svg" alt="nestjs" width="40" height="40"/> [NestJS](https://nestjs.com/)
+- <img src="https://i.pinimg.com/474x/fc/8c/31/fc8c31d2b6a01f87f04e7fd860ea0448.jpg" alt="mantine" width="40" height="40"/> [Mantine](https://mantine.dev/)
+- <img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/NestJS.svg" width="40" height="40"/> [NestJS](https://nestjs.com/)
 - <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/prisma/prisma-original.svg" alt="prisma" width="40" height="40"/> [Prisma](https://www.prisma.io/)
 - <img src="https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg" alt="sqlite" width="40" height="40"/> [SQLite](https://www.sqlite.org/index.html)
 - <img src="https://jwt.io/img/pic_logo.svg" alt="jwt" width="40" height="40"/> [JWT](https://jwt.io/)
