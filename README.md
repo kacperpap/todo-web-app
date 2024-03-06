@@ -47,7 +47,7 @@ To install:
     "start:prod": "node dist/main"
 ```
 
-**5.** In the backend directory opend in the console, create `Prisma` migrations, that will create your database: `npm run db:update`
+**5.** In the backend directory opened in the console, create `Prisma` migrations, that will create your database: `npm run db:update`
 ```javascript
   "db:update": "prisma migrate deploy && prisma generate"
 ```
