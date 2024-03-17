@@ -11,6 +11,8 @@ The project also provided an opportunity to work with `React`, a popular compone
 
 The application allows user login and registration using `JWT` tokens for authorization and authentication. This ensures the statelessness of the application, in line with the principles of `RestAPI`. The application has a `Single Page Application` (SPA) architecture. It allows adding, deleting, and editing task groups and individual tasks in the main application window.
 
+Moreover docker scripts enable to simply conteinarize application and use it in development environment.
+
 ## Used main technologies
 
 - <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="typescript" width="40" height="40" /> [TypeScript](https://www.typescriptlang.org/)
@@ -20,6 +22,7 @@ The application allows user login and registration using `JWT` tokens for author
 - <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/prisma/prisma-original.svg" alt="prisma" width="40" height="40"/> [Prisma](https://www.prisma.io/)
 - <img src="https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg" alt="sqlite" width="40" height="40"/> [SQLite](https://www.sqlite.org/index.html)
 - <img src="https://jwt.io/img/pic_logo.svg" alt="jwt" width="40" height="40"/> [JWT](https://jwt.io/)
+- <img src="https://github.com/kacperpap/todo-web-app/assets/64956354/776a3ef4-2041-48f7-997c-d524f9c82f86" alt="docker" width="40" height="40"/> [Docker](https://www.docker.com/)
 
 
 ## Instalation
@@ -50,6 +53,17 @@ To install:
 **5.** In the backend directory opened in the console, create `Prisma` migrations, that will create your database: `npm run db:update`
 ```javascript
   "db:update": "prisma migrate deploy && prisma generate"
+```
+
+**6.** To build container from images and run application run the following commands:
+```powershell
+    docker build -t <image_name:tag> .  //run in both frontend-react-ts and backend-nest directoris or specify path to dockerfile using -f flag
+
+    docker run -d --rm -p 8080:8080 --name <container_name> <frontend_image_name:tag>
+
+                                        //binded volume enables to persist dev data in sqlite after removing container
+    docker run -d --rm -p 9000:9000 -v ${PWD}/prisma/dev.db:/usr/src/app/prisma/dev.db <backend_image_name:tag>
+    
 ```
 
 ## Features
