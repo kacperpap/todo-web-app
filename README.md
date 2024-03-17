@@ -11,7 +11,7 @@ The project also provided an opportunity to work with `React`, a popular compone
 
 The application allows user login and registration using `JWT` tokens for authorization and authentication. This ensures the statelessness of the application, in line with the principles of `RestAPI`. The application has a `Single Page Application` (SPA) architecture. It allows adding, deleting, and editing task groups and individual tasks in the main application window.
 
-Moreover docker scripts enable to simply conteinarize application and use it in development environment.
+Moreover docker scripts enable to simply containerize application and use it in development environment.
 
 ## Used main technologies
 
